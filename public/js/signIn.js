@@ -9,8 +9,11 @@ function signInFunction(){
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
+            document.getElementById("error").innerHTML = errorMessage;
             console.log(errorMessage);
         });
+    }else {
+
     }
 }
 
