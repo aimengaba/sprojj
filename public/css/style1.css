@@ -1,7 +1,15 @@
+@font-face {
+  font-family: sansation;
+  src: url(../fonts/SansationLight/SansationLight.woff)
+}
 * {
   margin: 0px auto;
   padding: 0px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Lato', 'Open Sans', sans-serif;
+}
+
+.cont_login {
+  color:white;
 }
 .cont_principal {
   position: absolute;
@@ -135,16 +143,26 @@ position: relative;
 }
 
 .btn_sign {
-  background: rgba(255,64,88,0.74);
+  background: #09bca8;
   border:none;
   color: #fff;
   cursor: pointer;
 }
 .btn_sign:hover{
-  background: rgb(255, 165, 176);
+  background: #0ed6bf;
+}
+.btn_sign1 {
+  color: #09bca8;
+  background: #fff;
 }
 .btn_sign1:hover{
+  color: #09bca8;
   background:#f7f4f5;
+}
+
+.error{
+  color: #843534;
+  padding-bottom: 10px;
 }
 .terms_and_cons {
   width: 70%;

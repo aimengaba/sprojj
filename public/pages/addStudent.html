@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Register</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <!-- My stylesheet -->
+    <link href="../css/signin.css" rel="stylesheet">
+    <link href="../css/addStudent.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+
+
+  </head>
+  <body>
+  <div class="container">
+
+    <form class="well form-horizontal" action=" " method="post"  id="contact_form">
+<fieldset>
+
+<!-- Form Name -->
+<legend><center><h2><b>Add a student</b></h2></center></legend><br>
+
+<!-- Text input-->
+
+<div class="form-group">
+  <label class="col-md-4 control-label">First Name</label>
+  <div class="col-md-4 inputGroupContainer">
+  <div class="input-group">
+  <input  name="first_name" id="firstName" placeholder="First Name" class="form-control"  type="text">
+    </div>
+  </div>
+</div>
+
+<!-- Text input-->
+
+<div class="form-group">
+  <label class="col-md-4 control-label" >Last Name</label>
+    <div class="col-md-4 inputGroupContainer">
+    <div class="input-group">
+  <input name="last_name" id="lastName" placeholder="Last Name" class="form-control"  type="text">
+    </div>
+  </div>
+</div>
+<!-- Text input-->
+
+<div class="form-group">
+  <label class="col-md-4 control-label">Username</label>
+  <div class="col-md-4 inputGroupContainer">
+  <div class="input-group">
+  <input  name="user_name" id="userName" placeholder="Username" class="form-control"  type="text">
+    </div>
+  </div>
+</div>
+
+<!-- Text input-->
+
+<div class="form-group">
+  <label class="col-md-4 control-label" >Physical Age</label>
+    <div class="col-md-4 inputGroupContainer">
+    <div class="input-group">
+  <input id="p_age" name="physical_age" placeholder="Physical Age" class="form-control"  type="number">
+    </div>
+  </div>
+</div>
+
+<!-- Text input-->
+
+<div class="form-group">
+  <label class="col-md-4 control-label" >Mental Age</label>
+    <div class="col-md-4 inputGroupContainer">
+    <div class="input-group">
+  <input id="m_age" name="mental_age" placeholder="Mental Age" class="form-control"  type="number">
+    </div>
+  </div>
+</div>
+
+<!-- Text input-->
+       <div class="form-group">
+  <label class="col-md-4 control-label">IQ</label>
+    <div class="col-md-4 inputGroupContainer">
+    <div class="input-group">
+  <input id="iq" name="iq" placeholder="IQ" class="form-control"  type="number">
+    </div>
+  </div>
+</div>
+
+<!-- Success message -->
+<div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i> Success!.</div>
+
+<!-- Button -->
+<button class="btn btn-lg btn-primary btn-block" type="button" onclick="submitFunction1()">Register</button>
+<!-- <div class="form-group">
+  <label class="col-md-4 control-label"></label>
+  <div class="col-md-4"><br>
+    <button onclick="submitFunction" class="btn btn-warning" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+  </div>
+</div> -->
+
+</fieldset>
+</form>
+</div><!-- /.container -->
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js"></script>
+  <!-- Firebase references -->
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-database.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCcbt9XWxyIj8ZBr0davPnnPGD5aTDHWeg",
+      authDomain: "sproj-2ca67.firebaseapp.com",
+      databaseURL: "https://sproj-2ca67.firebaseio.com",
+      projectId: "sproj-2ca67",
+      storageBucket: "",
+      messagingSenderId: "289162020233"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <!-- <script src="../js/register.js"></script> -->
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="../js/addStudent.js"></script>
+
+</html>

@@ -37,54 +37,39 @@ $(document).ready(function() {
                     }
                 }
             },
-			 user_password: {
+			 physical_age: {
                 validators: {
                      stringLength: {
-                        min: 8,
+                        min: 0,
+                        max: 3,
                     },
                     notEmpty: {
-                        message: 'Please enter your Password'
+                        message: 'Please enter students Age'
                     }
                 }
             },
-			confirm_password: {
+			mental_age: {
                 validators: {
                      stringLength: {
-                        min: 8,
+                        min: 0,
+                        max: 3,
                     },
                     notEmpty: {
-                        message: 'Please confirm your Password'
+                        message: 'Please enter childs mental age'
                     }
                 }
             },
-            email: {
-                validators: {
-                    notEmpty: {
-                        message: 'Please enter your Email Address'
-                    },
-                    emailAddress: {
-                        message: 'Please enter a valid Email Address'
-                    }
-                }
-            },
-            contact_no: {
-                validators: {
-                  stringLength: {
-                        min: 12,
-                        max: 12,
-                    notEmpty: {
-                        message: 'Please enter your Contact No.'
-                     }
-                }
-            },
-			 department: {
-                validators: {
-                    notEmpty: {
-                        message: 'Please select your Department/Office'
-                    }
-                }
-            },
-                }
+        iq: {
+                  validators: {
+                       stringLength: {
+                          min: 0,
+                          max: 3,
+                      },
+                      notEmpty: {
+                          message: 'Please enter childs IQ'
+                      }
+                  }
+              },
             }
         })
         .on('success.form.bv', function(e) {
@@ -94,8 +79,8 @@ $(document).ready(function() {
             } else{
               var email = $("#email").value;
               var password = $("#password").value;
-              console.log("email", email);
-              console.log("password", password);
+              // console.log("email", email);
+              // console.log("password", password);
               firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
                 //$('#contact_form').data('bootstrapValidator').resetForm();
               }).catch(function(error) {
@@ -105,38 +90,39 @@ $(document).ready(function() {
                 // ...
               });
             }
+          });
+        })
 
+function submitFunction1(){
+  var firstname = $("#firstName").val();
+  var lastName = $("#lastName").val();
+  var userName = $("#userName").val();
+  var p_age = $("#p_age").val();
+  var m_age = $("#m_age").val();
+  var iq = $("#iq").val();
 
-        //     // Prevent form submission
-        //     e.preventDefault();
-        //
-        //     // Get the form instance
-        //     var $form = $(e.target);
-        //
-        //     // Get the BootstrapValidator instance
-        //     var bv = $form.data('bootstrapValidator');
-        //
-        //     // Use Ajax to submit form data
-        //     $.post($form.attr('action'), $form.serialize(), function(result) {
-        //         console.log(result);
-        //     }, 'json');
-        });
-});
-function submitFunction(){
-  var email = document.getElementById("email").value;
-  var password = document.getElementById("password").value;
-  console.log("email", email);
-  console.log("password", password);
-  if(email && password){
-    firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
-      $('#contact_form').data('bootstrapValidator').resetForm();
-    }).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode);
-      // ...
+  // console.log(firstname);
+  var database = firebase.database().ref();
+  var storesRef = database.child('students');
+  var newStoreRef = storesRef.push();
+  if(firstname && lastName && userName){
+    newStoreRef.set({
+      firstName: firstname,
+      lastName: lastName,
+      userName: userName,
+      p_age: p_age,
+      m_age: m_age,
+      iq: iq
     });
+    window.location.href = "main.html";
   }
 
+  // var newStudent = database.child().push({
+  //   firstName: firstName,
+  //   lastName: lastName,
+  //   userName: userName,
+  //   p_age: p_age,
+  //   m_age: m_age,
+  //   iq: iq
+  // })
 }
