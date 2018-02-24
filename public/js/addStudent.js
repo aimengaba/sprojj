@@ -112,9 +112,14 @@ function submitFunction1(){
       userName: userName,
       p_age: p_age,
       m_age: m_age,
-      iq: iq
-    });
-    window.location.href = "main.html";
+      iq: iq,
+      pics: ["http://via.placeholder.com/350x350"]
+    }).then(function(){
+      window.location.href = "main.html";
+    }).catch(function(error) {
+    console.log('Synchronization failed');
+  });
+
   }
 
   // var newStudent = database.child().push({
