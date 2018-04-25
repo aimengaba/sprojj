@@ -9,6 +9,8 @@
     width: 20%;
     margin: 10px;
     display: inline-block;
+    text-align: center;
+    font-size: 18px;
 }
 
 .card:hover {

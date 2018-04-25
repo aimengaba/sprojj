@@ -20,3 +20,6 @@ function signInFunction(){
         });
     }
 }
+function loadRegisterPage(){
+  window.location.href = "pages/home.html";
+}

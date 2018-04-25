@@ -6,7 +6,7 @@ $(document).ready(function(){
     console.log(keys);
     var i =0;
     for(var s in snapshot.val()){
-      $(".content").append("<div id='"+keys[i]+"' class='card'>\n <img src='http://via.placeholder.com/350x350' alt='Avatar' style='width:100%'/>\n <div class='container'>"+snapshot.val()[s].firstName+"</div></div>")
+      $(".content").append("<div id='"+keys[i]+"' class='card'>\n <img src='http://via.placeholder.com/350x350' alt='Avatar' style='width:100%'/>\n <div>"+snapshot.val()[s].firstName+"</div></div>")
       i++;
     }
     $(".card").on("click", function(e){
@@ -18,22 +18,36 @@ $(document).ready(function(){
       $(".content").append("<div id='ground' class=card> <img src='../images/ground.jpg' style='width:100%'/>Ground</div>");
       var picturesRef = firebase.database().ref("students/"+e.currentTarget.id+"/pics");
 
-      $(".card").on("click", function(event){
-        console.log($(".content>h2").attr('id'))
-        var picRef = firebase.database().ref("students/"+$(".content>h2").attr('id')+"/pics");
+      $(".card").on("click", function(ev){
+        console.log("event.target.id: ", ev.currentTarget.id);
+        var userID = $(".content>h2").attr('id');
+        var picRef = firebase.database().ref("students/"+userID+"/pics/"+ev.currentTarget.id);
         $(".content > *").remove();
-        $(".content").append("<div class='container'><a href='#' class='btn btn-primary'>Add picture</a></div>")
-        picRef.on('value', function(snapshot){
-          console.log("length ", snapshot.val().length)
-          if(snapshot.val().length === 1){
-            $(".content").append("<h2>No content...</h2>");
-          }else{
-            for(var i=0; i<snapshot.val().length; i++){
+        $(".content").append("<div class='container'><input type='file' class='btn btn-primary'accept='image/*'/><button id='upload'>Upload</button></div>");
 
-            }
-          }
+        updatePictures(picRef);
+
+        $("#upload").on("click", function(){
+          const storageRef = firebase.storage().ref();
+          const file = $(":file").get(0).files[0];
+          const name = (+new Date()) + '-' + file.name;
+          const metadata = { contentType: file.type };
+          const task = storageRef.child(name).put(file, metadata);
+          task.then((snapshot) => {
+              console.log(snapshot.downloadURL);
+              var database = firebase.database().ref("students/"+userID+"/pics")
+              var storesRef = database.child(ev.currentTarget.id);
+              var newStoreRef = storesRef.push();
+              newStoreRef.set({
+                url: snapshot.downloadURL
+              })
+              updatePictures(picRef);
+          });
+
         })
       });
+
+
       // studentsRef.on('value', function(snapshot){
       //   if(snapshot.length === 1){
       //
@@ -44,4 +58,20 @@ $(document).ready(function(){
       // })
     })
   })
+  function updatePictures(picRef){
+    $(".content > .card").remove();
+    picRef.on('value', function(snapshot){
+      console.log("length ", Object.keys(snapshot.val()).length)
+      var size = Object.keys(snapshot.val()).length;
+      if(size === 1){
+        $(".content").append("<h2>No content...</h2>");
+      }else{
+        snapshot.forEach(function(childSnapshot){
+          if(childSnapshot.key !="0"){
+            $(".content").append("<div class='card'>\n <img src="+childSnapshot.val().url+" alt='Avatar' style='width:100%'/>\n</div>")
+          }
+        })
+      }
+    })
+  }
 })

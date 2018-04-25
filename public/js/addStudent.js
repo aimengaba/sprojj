@@ -113,7 +113,12 @@ function submitFunction1(){
       p_age: p_age,
       m_age: m_age,
       iq: iq,
-      pics: ["http://via.placeholder.com/350x350"]
+      pics: {
+        ground: ["http://via.placeholder.com/350x350"],
+        canteen: ["http://via.placeholder.com/350x350"],
+        class: ["http://via.placeholder.com/350x350"]
+      }
+
     }).then(function(){
       window.location.href = "main.html";
     }).catch(function(error) {
