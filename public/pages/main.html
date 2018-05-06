@@ -1,64 +1,70 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Register</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js"></script>
-    <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <!-- Custom styles for this template -->
-    <link href="../css/main.css" rel="stylesheet">
-    <link href="../js/bootstrap.min.js">
-    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-database.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-storage.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyCcbt9XWxyIj8ZBr0davPnnPGD5aTDHWeg",
-        authDomain: "sproj-2ca67.firebaseapp.com",
-        databaseURL: "https://sproj-2ca67.firebaseio.com",
-        projectId: "sproj-2ca67",
-        storageBucket: "gs://sproj-2ca67.appspot.com",
-        messagingSenderId: "289162020233"
-      };
-      firebase.initializeApp(config);
-    </script>
-    <script src="../js/main.js"></script>
-  </head>
-  <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class = "navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class ="icon-bar"></span>
-            <span class = "icon-bar"></span>
-            <span class = "icon-bar"></span>
-          </button>
-          <a class = "navbar-brand" href="#">Heading</a>
-        </div>
-        <div id="navbar" class = "navbar-collapse collapse" aria-expanded="false" style="height:1p">
-          <ul class="nav navbar-nav">
-            <li id="home" role="presentation" class="active"><a href="#" style="color:#777">Home</a></li>
-            <li id="Profile" role="presentation"><a href="#" style="color:#777">Profile</a></li>
-            <li id="Messages" role="presentation"><a href="#" style="color:#777">Messages</a></li>
-          </ul>
-        </div>
+  <title>Register</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js"></script>
+  <!-- Bootstrap core CSS -->
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../css/main.css" rel="stylesheet">
+  <link href="../js/bootstrap.min.js">
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase-storage.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCcbt9XWxyIj8ZBr0davPnnPGD5aTDHWeg",
+      authDomain: "sproj-2ca67.firebaseapp.com",
+      databaseURL: "https://sproj-2ca67.firebaseio.com",
+      projectId: "sproj-2ca67",
+      storageBucket: "gs://sproj-2ca67.appspot.com",
+      messagingSenderId: "289162020233"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script src="../js/main.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+          aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">SPROJ</a>
       </div>
-    </nav>
-    <div class="content">
-      <div class="container">
-        <a href="addStudent.html" class="btn btn-primary">Add student</a>
+      <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height:1p">
+        <ul class="nav navbar-nav">
+          <li id="home" role="presentation" class="active">
+            <a href="#" style="color:#777">Home</a>
+          </li>
+          <!-- <li id="Profile" role="presentation"><a href="#" style="color:#777">Profile</a></li>
+            <li id="Messages" role="presentation"><a href="#" style="color:#777">Messages</a></li> -->
+        </ul>
       </div>
     </div>
-  </body>
+  </nav>
+  <div class="content">
+    <!-- <div class="container">
+      <a href="addStudent.html" class="btn btn-primary">Add student</a>
+    </div> -->
+  </div>
+</body>
+
 </html>
