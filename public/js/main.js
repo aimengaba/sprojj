@@ -1,6 +1,6 @@
 $(document).ready(function () {
   var studentsRef = firebase.database().ref("students");
-  studentsRef.on('value', function (snapshot) {
+  studentsRef.once('value', function (snapshot) {
     console.log(snapshot.val());
     var keys = Object.keys(snapshot.val());
     console.log(keys);
@@ -35,7 +35,7 @@ $(document).ready(function () {
         $(".content > *").remove();
         // $(".content").append("<div class='container'><input type='file' class='btn btn-primary'accept='image/*'/><button id='upload'>Upload</button></div>");
 
-        updatePictures(picRef);
+        updatePictures(picRef, userID, ev.currentTarget.id);
 
 
       });
@@ -51,14 +51,16 @@ $(document).ready(function () {
       // })
     })
   })
-  function updatePictures(picRef) {
+  function updatePictures(picRef, userID, currTarget) {
     $(".content > .card").remove();
-    picRef.on('value', function (snapshot) {
+    $("#addImg").remove();
+    picRef.once('value', function (snapshot) {
+      $(".content > .card").remove();
       console.log("length ", Object.keys(snapshot.val()).length)
       var size = Object.keys(snapshot.val()).length;
       snapshot.forEach(function (childSnapshot) {
         if (childSnapshot.key != "0") {
-          $(".content").append("<div class='card'>\n <img src=" + childSnapshot.val().url + " alt='Avatar' style='width:100%'/>\n<div><button id=" + childSnapshot.key + " >Record</button></audio></div></div>")
+          $(".content").append("<div class='card'>\n <img src=" + childSnapshot.val().url + " alt='Avatar' style='width:100%'/>\n<div></audio></div></div>")
         }
       })
       //***********popup**********
@@ -70,62 +72,182 @@ $(document).ready(function () {
         "<h4 class='modal-title'>Add student image and voice</h4>" +
         "</div> " +
         "<div class='modal-body'>" +
-        "<div class='container'><input type='file' class='btn btn-primary'accept='image/*'/><button id='imgUpload'>Upload Image</button></div>" +
-        "<div class='container'><input type='file' class='btn btn-primary'accept='audio/*'/><button id='audUpload'>Upload Audio</button></div>" +
+        "<div class='loader'></div>" +
+        "<div class='container' id='imageU'><input type='file' class='btn btn-primary'accept='image/*'/><button id='imgUpload'>Upload Image</button></div>" +
+        "<div class='container' id='audioU'><input id='inputAud' type='file' class='btn btn-primary'accept='audio/*'/><button id='audUpload'>Upload Audio</button></div>" +
         "</div>" +
         "<div class='modal-footer'>" +
         "  <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div>" +
         "</div></div></div> ")
+      $(".loader").addClass(".loader")
       $("#popup").addClass("popup");
       $("#myPopup").addClass("popuptext");
-      $(".content").append("<button type='button' class='btn btn - info btn - lg' data-toggle='modal' data-target='#myModal'>Open Modal</button>")
-      $(".content").append("<div class='card1' >\n <img class='plus' src='../images/plus-math.png' alt='Avatar' style='width:100%'/>\n <div><a href='addStudent.html' class='buttonAdd'>Add Image</a></div></div>")
-      $(".card1").on("click", function () {
-        var popup = document.getElementById("myPopup");
-        console.log($('#myPopup').css('visibility'))
-        if ($('#myPopup').css('visibility') === 'hidden') {
-          console.log('here')
-          $('#myPopup').css('visibility', 'visible')
-        } else {
-          $('#myPopup').css('visibility', 'hidden')
-        }
+      //add student button
+      $(".content").append("<button id='addImg' type='button' class='btn btn - info btn - lg' data-toggle='modal' data-target='#myModal'>Add Image and Audio</button>")
+      // $(".content").append("<div class='card1' >\n <img class='plus' src='../images/plus-math.png' alt='Avatar' style='width:100%'/>\n <div><a href='addStudent.html' class='buttonAdd'>Add Image</a></div></div>")
+      // $(".card1").on("click", function () {
+      //   var popup = document.getElementById("myPopup");
+      //   console.log($('#myPopup').css('visibility'))
+      //   if ($('#myPopup').css('visibility') === 'hidden') {
+      //     console.log('here')
+      //     $('#myPopup').css('visibility', 'visible')
+      //   } else {
+      //     $('#myPopup').css('visibility', 'hidden')
+      //   }
 
-        $("#imgUpload").on("click", function () {
-          const storageRef = firebase.storage().ref();
-          const file = $(":file").get(0).files[0];
-          const name = (+new Date()) + '-' + file.name;
-          const metadata = { contentType: file.type };
-          const task = storageRef.child(name).put(file, metadata);
-          task.then((snapshot) => {
-            console.log(snapshot.downloadURL);
-            var database = firebase.database().ref("students/" + userID + "/pics")
-            var storesRef = database.child(ev.currentTarget.id);
-            var newStoreRef = storesRef.push();
-            newStoreRef.set({
-              url: snapshot.downloadURL
-            })
-            updatePictures(picRef);
-          });
+      //uploads image to firebase
+      $("#imgUpload").on("click", function () {
+        const storageRef = firebase.storage().ref();
+        const file = $(":file").get(0).files[0];
+        const name = (+new Date()) + '-' + file.name;
+        const metadata = { contentType: file.type };
+        const task = storageRef.child(name).put(file, metadata);
+        $(".loader").css("display", "block");
+        task.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+          function (snapshot) {
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+              case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+              case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
+            }
+          }, function (error) {
 
-        })
-        // const storageRef = firebase.storage().ref();
-        // const file = $(":file").get(0).files[0];
-        // const name = (+new Date()) + '-' + file.name;
-        // const metadata = { contentType: file.type };
-        // const task = storageRef.child(name).put(file, metadata);
-        // task.then((snapshot) => {
-        //   console.log(snapshot.downloadURL);
-        //   var database = firebase.database().ref("students/" + userID + "/pics")
-        //   var storesRef = database.child(ev.currentTarget.id);
-        //   var newStoreRef = storesRef.push();
-        //   newStoreRef.set({
-        //     url: snapshot.downloadURL
-        //   })
-        //   updatePictures(picRef);
-        // });
+            // A full list of error codes is available at
+            // https://firebase.google.com/docs/storage/web/handle-errors
+            switch (error.code) {
+              case 'storage/unauthorized':
+                // User doesn't have permission to access the object
+                $(".loader").css("display", "none");
+                $("#imageU").append("<h4>Error uploading image, user doesn't have permission to access the object!</h4>")
+                break;
 
+              case 'storage/canceled':
+                // User canceled the upload
+                $(".loader").css("display", "none");
+                $("#imageU").append("<h4>Error uploading image!</h4>")
+                break;
+
+              case 'storage/unknown':
+                $(".loader").css("display", "none");
+                $("#imageU").append("<h4>Error uploading image!</h4>")
+                // Unknown error occurred, inspect error.serverResponse
+                break;
+            }
+          }, function () {
+            // Upload completed successfully, now we can get the download URL
+            task.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+              console.log('File available at', downloadURL);
+              $(".loader").css("display", "none")
+              $("#imageU > *").remove();
+              $("#imageU").append("<h4>Image uploaded successfully!</h4>")
+              console.log(downloadURL);
+              var database = firebase.database().ref("students/" + userID + "/pics")
+              var storesRef = database.child(currTarget);
+              var newStoreRef = storesRef.push();
+              newStoreRef.set({
+                url: downloadURL
+              })
+              updatePictures(picRef, userID, currTarget);
+              console.log('File available at', downloadURL);
+            });
+
+          }
+        );
+      });
+
+      // })
+      //upload audio to firebase
+      $("#audUpload").on("click", function () {
+        const storageRef = firebase.storage().ref();
+        const file = $("#inputAud")[0].files[0];
+        console.log($("#inputAud")[0])
+        const name = (+new Date()) + '-' + file.name;
+        const metadata = { contentType: file.type };
+        const task = storageRef.child(name).put(file, metadata);
+        $(".loader").css("display", "block")
+        task.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+          function (snapshot) {
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+              case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+              case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
+            }
+          }, function (error) {
+
+            // A full list of error codes is available at
+            // https://firebase.google.com/docs/storage/web/handle-errors
+            switch (error.code) {
+              case 'storage/unauthorized':
+                // User doesn't have permission to access the object
+                $(".loader").css("display", "none");
+                $("#audioU").append("<h4>Error uploading audio, user doesn't have permission to access the object!</h4>");
+                break;
+
+              case 'storage/canceled':
+                // User canceled the upload
+                $(".loader").css("display", "none");
+                $("#imageU").append("<h4>Error uploading audio!</h4>");
+                break;
+
+              case 'storage/unknown':
+                $(".loader").css("display", "none");
+                $("#imageU").append("<h4>Error uploading audio!</h4>")
+                // Unknown error occurred, inspect error.serverResponse
+                break;
+            }
+          }, function () {
+            // Upload completed successfully, now we can get the download URL
+            task.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+              $(".loader").css("display", "none")
+              $("#audioU > *").remove();
+              $("#audioU").append("<h4>Audio uploaded successfully!</h4>")
+              console.log(downloadURL);
+              var database = firebase.database().ref("students/" + userID + "/audio")
+              var storesRef = database.child(currTarget);
+              var newStoreRef = storesRef.push();
+              newStoreRef.set({
+                url: downloadURL
+              })
+              updatePictures(picRef, userID, currTarget);
+              console.log('File available at', downloadURL);
+            });
+          }
+        );
       })
-
     })
+    // Listen for state changes, errors, and completion of the upload.
+
+
+    // const storageRef = firebase.storage().ref();
+    // const file = $(":file").get(0).files[0];
+    // const name = (+new Date()) + '-' + file.name;
+    // const metadata = { contentType: file.type };
+    // const task = storageRef.child(name).put(file, metadata);
+    // task.then((snapshot) => {
+    //   console.log(snapshot.downloadURL);
+    //   var database = firebase.database().ref("students/" + userID + "/pics")
+    //   var storesRef = database.child(ev.currentTarget.id);
+    //   var newStoreRef = storesRef.push();
+    //   newStoreRef.set({
+    //     url: snapshot.downloadURL
+    //   })
+    //   updatePictures(picRef);
+    // });
+
+
+
+    // })
   }
 })
