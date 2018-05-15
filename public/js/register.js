@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $('#contact_form').bootstrapValidator({
         // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
         feedbackIcons: {
@@ -9,17 +9,17 @@ $(document).ready(function() {
         fields: {
             first_name: {
                 validators: {
-                        stringLength: {
+                    stringLength: {
                         min: 2,
                     },
-                        notEmpty: {
+                    notEmpty: {
                         message: 'Please enter your First Name'
                     }
                 }
             },
-             last_name: {
+            last_name: {
                 validators: {
-                     stringLength: {
+                    stringLength: {
                         min: 2,
                     },
                     notEmpty: {
@@ -27,9 +27,9 @@ $(document).ready(function() {
                     }
                 }
             },
-			 user_name: {
+            user_name: {
                 validators: {
-                     stringLength: {
+                    stringLength: {
                         min: 8,
                     },
                     notEmpty: {
@@ -37,9 +37,9 @@ $(document).ready(function() {
                     }
                 }
             },
-			 user_password: {
+            user_password: {
                 validators: {
-                     stringLength: {
+                    stringLength: {
                         min: 8,
                     },
                     notEmpty: {
@@ -47,9 +47,9 @@ $(document).ready(function() {
                     }
                 }
             },
-			confirm_password: {
+            confirm_password: {
                 validators: {
-                     stringLength: {
+                    stringLength: {
                         min: 8,
                     },
                     notEmpty: {
@@ -69,74 +69,75 @@ $(document).ready(function() {
             },
             contact_no: {
                 validators: {
-                  stringLength: {
+                    stringLength: {
                         min: 12,
                         max: 12,
-                    notEmpty: {
-                        message: 'Please enter your Contact No.'
-                     }
-                }
-            },
-			 department: {
-                validators: {
-                    notEmpty: {
-                        message: 'Please select your Department/Office'
+                        notEmpty: {
+                            message: 'Please enter your Contact No.'
+                        }
                     }
-                }
-            },
-                }
+                },
+                department: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please select your Department/Office'
+                        }
+                    }
+                },
             }
-        })
-        .on('success.form.bv', function(e) {
+        }
+    })
+        .on('success.form.bv', function (e) {
             // $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
-            if(e.isDefaultPrevented()){
+            if (e.isDefaultPrevented()) {
 
-            } else{
-              var email = $("#email").value;
-              var password = $("#password").value;
-              console.log("email", email);
-              console.log("password", password);
-              firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
-                //$('#contact_form').data('bootstrapValidator').resetForm();
-              }).catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                // ...
-              });
+            } else {
+                var email = $("#email").value;
+                var password = $("#password").value;
+                console.log("email", email);
+                console.log("password", password);
+                firebase.auth().createUserWithEmailAndPassword(email, password).then(function () {
+                    //$('#contact_form').data('bootstrapValidator').resetForm();
+                }).catch(function (error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // ...
+                });
             }
 
 
-        //     // Prevent form submission
-        //     e.preventDefault();
-        //
-        //     // Get the form instance
-        //     var $form = $(e.target);
-        //
-        //     // Get the BootstrapValidator instance
-        //     var bv = $form.data('bootstrapValidator');
-        //
-        //     // Use Ajax to submit form data
-        //     $.post($form.attr('action'), $form.serialize(), function(result) {
-        //         console.log(result);
-        //     }, 'json');
+            //     // Prevent form submission
+            //     e.preventDefault();
+            //
+            //     // Get the form instance
+            //     var $form = $(e.target);
+            //
+            //     // Get the BootstrapValidator instance
+            //     var bv = $form.data('bootstrapValidator');
+            //
+            //     // Use Ajax to submit form data
+            //     $.post($form.attr('action'), $form.serialize(), function(result) {
+            //         console.log(result);
+            //     }, 'json');
         });
 });
-function submitFunction(){
-  var email = document.getElementById("email").value;
-  var password = document.getElementById("password").value;
-  console.log("email", email);
-  console.log("password", password);
-  if(email && password){
-    firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
-      $('#contact_form').data('bootstrapValidator').resetForm();
-    }).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode);
-      // ...
-    });
-  }
+function submitFunction() {
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+    console.log("email", email);
+    console.log("password", password);
+    if (email && password) {
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(function () {
+            $('#contact_form').data('bootstrapValidator').resetForm();
+            window.location.href = "../index.html"
+        }).catch(function (error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorCode);
+            // ...
+        });
+    }
 
 }

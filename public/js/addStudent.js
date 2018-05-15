@@ -113,20 +113,16 @@ function submitFunction1() {
             p_age: p_age,
             m_age: m_age,
             iq: iq,
-            pics: {
-                livingskills: ["http://via.placeholder.com/350x350"],
-                gym: ["http://via.placeholder.com/350x350"],
-                class: ["http://via.placeholder.com/350x350"]
-            },
-            audio: {
+            upload: {
                 livingskills: ["none"],
                 gym: ["none"],
                 class: ["none"]
-            }
+            },
 
         }).then(function () {
             window.location.href = "main.html";
         }).catch(function (error) {
+            console.log(error)
             console.log('Synchronization failed');
         });
 
